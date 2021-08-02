@@ -8,10 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @UniqueEntity(fields="email", message="Un utilisateur existe déjà avec cet email.") 
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -24,6 +26,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="Votre email n'est pas fourni")
+     * @Assert\Email(message="Votre email n'est pas valide")
      */
     private $email;
 
@@ -35,11 +39,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(min = 6, minMessage="Votre mot de passe doit faire au moins {{ limit }} caractères.")
+     * @Assert\NotBlank(message="Le mot de passe n'est pas fourni")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\Length(min = 3, minMessage="Votre nom d'utilisateur doit faire au moins {{ limit }} caractères.")
+     * @Assert\NotBlank(message="Le nom d'utilisateur n'est pas fourni")
      */
     private $name;
 
@@ -54,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $confirmationToken;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default" : False})
      */
     private $confirmed;
 
@@ -285,4 +293,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /** 
+     * @Assert\IsTrue(message="Votre mot de passe doit contenir au moins une majuscule et un chiffre") 
+     */ 
+    public function isPassword()
+    {
+        if (preg_match("/^(?=.*[A-Z])(?=.*[0-9]).*$/",$this->password)) {
+            return true;
+        }
+        return false;
+    }   
 }
