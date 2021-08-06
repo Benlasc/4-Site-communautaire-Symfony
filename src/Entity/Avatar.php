@@ -4,13 +4,14 @@ namespace App\Entity;
 
 use App\Repository\AvatarRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass=AvatarRepository::class)
  * @ORM\HasLifecycleCallbacks()
  */
-class Avatar
+class Avatar implements Serializable
 {
     /**
      * @ORM\Id
@@ -163,6 +164,16 @@ class Avatar
    public function getWebPath() 
    { 
        return $this->getUploadDir() . '/' . $this->getId() . '.' . $this->getExtension(); 
-   } 
+   }
+
+   public function serialize()
+   {
+       return serialize($this->getId());
+   }
+
+   public function unserialize($serialized)
+   {
+       $this->id = unserialize($serialized);
+   }
 
 }

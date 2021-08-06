@@ -24,3 +24,8 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    Symfony\Component\Mime\BodyRendererInterface: '@twig.mime_body_renderer'
+
+    App\Security\Listener\CheckConfirmedListener:
+        tags:
+            - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\CheckPassportEvent, method: checkPassport, priority: -10 }          
