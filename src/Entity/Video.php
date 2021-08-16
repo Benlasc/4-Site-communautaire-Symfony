@@ -18,9 +18,9 @@ class Video
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
-    private $url;
+    private $iframe;
 
     /**
      * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="videos")
@@ -33,14 +33,14 @@ class Video
         return $this->id;
     }
 
-    public function getUrl(): ?string
+    public function getIframe(): ?string
     {
-        return $this->url;
+        return $this->iframe;
     }
 
-    public function setUrl(string $url): self
+    public function setIframe(string $iframe): self
     {
-        $this->url = $url;
+        $this->iframe = $iframe;
 
         return $this;
     }

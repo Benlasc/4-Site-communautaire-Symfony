@@ -5,10 +5,14 @@ namespace App\Controller;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
+use App\services\Slug;
+use DateTime;
+use PhpParser\Node\Expr\Cast\String_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class TrickController extends AbstractController
 {
@@ -21,17 +25,19 @@ class TrickController extends AbstractController
     }
 
     #[Route('/new', name: 'trick_new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    public function new(Request $request, Slug $slug): Response
     {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setCreationDate(new DateTime('now'));
+            $trick->setSlug($slug->Slug($trick->getName()));
+            $trick->setAuthor($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
             $entityManager->flush();
-
             return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -41,7 +47,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'trick_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'trick_show', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function show(Trick $trick): Response
     {
         return $this->render('trick/show.html.twig', [
@@ -77,5 +83,15 @@ class TrickController extends AbstractController
         }
 
         return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/test-{id}', name: 'trick_test', methods: ['GET'])]
+    public function test(Trick $trick = null)
+    {
+        echo $this->renderView('trick/showtest.html.twig', [
+            'trick' => $trick,
+        ]);
+
+        die();
     }
 }

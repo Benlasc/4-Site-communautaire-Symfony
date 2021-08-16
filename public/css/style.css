@@ -1,0 +1,237 @@
+.card-body-home {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    margin-bottom: 0rem;
+}
+
+.wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.wrapper:after {
+    content: '';
+    display: block;
+    padding-top: 50%;
+}
+
+.wrapper img {
+    height: 100%;
+    max-width: none;
+    position: absolute;
+    object-fit: cover;
+}
+
+.image-home {
+    width: 100%;
+    height: 100vh;
+    background-image: url('/assets/snowboard.jpg');
+    background-size: cover;
+    background-position-x: 17%;
+    background-repeat-x: no-repeat;
+}
+
+@media screen and (max-width: 400px){
+    .image-home {
+        height: 50vh;
+    }
+}
+
+/* Fenêtre show */
+
+h2{
+    font-size: 5.4vw;
+}
+
+.image-une{
+    position: relative;
+}
+
+.image-une a{
+    color: inherit;
+}
+
+.image-une img{
+    width: 100%;
+}
+
+.images_videos img{
+    object-fit: contain;
+    height: 100%;
+}
+
+.edit-supp{
+    position: absolute;
+    border: solid 1.5px;
+    border-color: #d24d4d;
+    background-color: rgb(248, 248, 248);
+    display: flex;
+    gap: 5px;
+    justify-content: space-around;
+    padding: 5px;
+    top: 10px;
+    right: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.trick-name{
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1em;
+    color: rgb(243 32 139 / 93%);
+    text-shadow: rgba(230, 240, 192, 0.94) 0.1em 0.1em 0.2em;
+    font-family: 'Bitter', serif;
+    white-space: nowrap;
+}
+
+.description{
+    text-align: justify;
+}
+
+.infos{
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    border-bottom: solid 1px;
+    padding-bottom: 20px;
+}
+
+.infos div{
+    padding: 5px;
+    border: solid 2px;
+    border-radius: 5px;
+}
+
+.laisser_commentaire form{
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    align-items: flex-start;
+    padding-bottom: 25px;
+    border-bottom: solid 1px;
+}
+
+.laisser_commentaire button{
+    box-shadow: 10px 5px 5px black;
+}
+
+.commentaire{
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.commentaire .avatar{
+    border-radius: 50%;
+    border: solid black 0.5px;
+    width: 67px;
+}
+
+.commentaire .com{
+    border: solid black 2px;
+    padding: 10px 15px;
+}
+
+/* Fenêtre show trick */
+
+.box {
+    position: absolute;
+    transform: translate(-50%, -50%) scale(0, 0);
+    opacity: 1;
+    padding: 10px;
+    background-color: white;
+    width: 100%;
+    height: 100vh;
+    left: 50%;
+    top: 50%;
+    overflow: scroll;
+    position: fixed;
+    overflow-x: hidden;
+    transition: transform 1s; 
+}
+
+.box2{
+    transform: translate(-50%, -50%) scale(1, 1);
+}
+
+@media (min-width: 570px){
+    h2 {
+        font-size: 2rem;
+    }
+
+    .edit-supp{
+        width: 60px;
+    }
+    
+    .infos{
+        margin: 0;
+    }
+      
+    .laisser_commentaire form{
+        margin: 0;
+    }
+    
+        .commentaire{
+        margin: 0;
+    }
+}
+
+@media (min-width: 768px){
+    .box {
+        padding: 10px;
+        width: 90%;
+        height: 90vh;
+        border: solid 1px;
+    }
+
+    .infos{
+        margin: 0px 10%;
+    }
+      
+    .laisser_commentaire form{
+        margin: 0px 10%;
+    }
+
+    .laisser_commentaire button{
+        white-space: nowrap;
+    }
+    
+        .commentaire{
+        margin: 0px 10%;
+    }
+}
+
+@media (min-width: 992px){
+    h2 {
+        font-size: 2.3rem;
+    }
+
+    .description{
+        margin: 0px 7%;
+    }
+
+    .laisser_commentaire form{
+        padding: 0 40px 25px 40px;
+    }
+
+    .commentaire{
+        padding: 0 40px;
+    }
+}
+
+@media (min-width: 1200px){
+    h2 {
+        font-size: 2.7rem;
+    }
+}

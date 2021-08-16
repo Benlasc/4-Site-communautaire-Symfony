@@ -1,11 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Trick{% endblock %}
+{% block title %}Nouvelle figure
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Trick</h1>
 
-    {{ include('trick/_form.html.twig') }}
-
-    <a href="{{ path('trick_index') }}">back to list</a>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-7 mx-auto">
+				<div class="card bg-light mb-3 mt-5">
+					<div class="card-body">
+						<div class="card-header mb-3 text-center">Enregristrer une nouvelle figure</div>
+						{% for label, messages in app.flashes %}
+							{% for message in messages %}
+								<div class="alert alert-{{ label }}" role="alert">
+									{{ message }}
+								</div>
+							{% endfor %}
+						{% endfor %}
+						{{ include('trick/_form.html.twig') }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
