@@ -6,9 +6,14 @@ use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
+ * @UniqueEntity(fields={"name", "groupe"},
+ * errorPath="name",
+ * message="Une figure avec ce nom et ce groupe existe déjà sur le site.")
  */
 class Trick
 {
@@ -21,16 +26,19 @@ class Trick
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le nom de la figure n'est pas fourni")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=70, nullable=true)
+     * @Assert\NotBlank(message="Le groupe de la figure n'est pas fourni")
      */
     private $groupe;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="La description de la figure n'est pas fourni")
      */
     private $description;
 

@@ -28,4 +28,6 @@ services:
 
     App\Security\Listener\CheckConfirmedListener:
         tags:
-            - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\CheckPassportEvent, method: checkPassport, priority: -10 }          
+            - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\CheckPassportEvent, method: checkPassport, priority: -10 }
+            
+    Symfony\Bundle\SecurityBundle\Security\FirewallMap: '@security.firewall.map'

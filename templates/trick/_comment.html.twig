@@ -1,0 +1,14 @@
+<div class="commentaire mb-4" style="display: none;">
+	{% set urlAvatar = (comment.author.avatar == null) ? '/assets/avatar.png' : comment.author.avatar.getWebPath %}
+	<div class="author">
+		<span>{{comment.author.name}}</span>
+		<img class="avatar" src="{{urlAvatar}}" alt="avatar">
+	</div>
+	<div class="com">
+		<span>{{comment.date|format_datetime(locale='fr')}}
+			:</span>
+		<div class="content">
+			{{comment.content}}
+		</div>
+	</div>
+</div>

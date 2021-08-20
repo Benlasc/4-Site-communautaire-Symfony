@@ -1,11 +1,50 @@
+.image-home {
+    width: 100%;
+    height: 50vh;
+    background-image: url('/assets/snowboard.jpg');
+    background-size: cover;
+    background-position-x: 17%;
+    background-repeat-x: no-repeat;
+}
+
+.down {
+    display: none;
+}
+
+.col {
+    min-width: 215px;
+}
+
 .card-body-home {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.card-body-home >* {
+    flex: 0 1 0;
+    margin-left: 10px;
+    text-align: end;
+}
+
+.card-body-home a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card-body-home svg {
+    color: rgb(2, 6, 59);
+}
+
 .card-title {
     margin-bottom: 0rem;
+    text-align: center;
+    min-width: 75%;
+    width: 100%;
+    margin-left: 0px;
+    flex: 1 1 auto;
+    font-size: 1.7rem;
+    color: rgb(241, 79, 93);
 }
 
 .wrapper {
@@ -26,45 +65,34 @@
     object-fit: cover;
 }
 
-.image-home {
-    width: 100%;
-    height: 100vh;
-    background-image: url('/assets/snowboard.jpg');
-    background-size: cover;
-    background-position-x: 17%;
-    background-repeat-x: no-repeat;
-}
-
-@media screen and (max-width: 400px){
-    .image-home {
-        height: 50vh;
-    }
-}
-
 /* Fenêtre show */
 
-h2{
+h2 {
     font-size: 5.4vw;
 }
 
-.image-une{
+.image-une {
     position: relative;
 }
 
-.image-une a{
+.image-une a {
     color: inherit;
 }
 
-.image-une img{
+.image-une img {
     width: 100%;
 }
 
-.images_videos img{
+.images_videos img {
     object-fit: contain;
     height: 100%;
 }
 
-.edit-supp{
+iframe {
+    width: 100%;
+}
+
+.edit-supp {
     position: absolute;
     border: solid 1.5px;
     border-color: #d24d4d;
@@ -83,7 +111,7 @@ h2{
     left: 10px;
 }
 
-.trick-name{
+.trick-name {
     position: absolute;
     top: 5%;
     left: 50%;
@@ -95,11 +123,11 @@ h2{
     white-space: nowrap;
 }
 
-.description{
+.description {
     text-align: justify;
 }
 
-.infos{
+.infos {
     display: flex;
     justify-content: center;
     gap: 25px;
@@ -107,13 +135,13 @@ h2{
     padding-bottom: 20px;
 }
 
-.infos div{
+.infos div {
     padding: 5px;
     border: solid 2px;
     border-radius: 5px;
 }
 
-.laisser_commentaire form{
+.laisser_commentaire form {
     display: flex;
     justify-content: center;
     gap: 25px;
@@ -122,25 +150,37 @@ h2{
     border-bottom: solid 1px;
 }
 
-.laisser_commentaire button{
+.laisser_commentaire button, .more-comments {
     box-shadow: 10px 5px 5px black;
 }
 
-.commentaire{
+.commentaire {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 18px;
 }
 
-.commentaire .avatar{
-    border-radius: 50%;
-    border: solid black 0.5px;
-    width: 67px;
+.commentaire .author {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.commentaire .com{
+.commentaire .com {
+    width: 100%;
+}
+
+.commentaire .avatar {
+    border-radius: 50%;
+    border: solid black 0.5px;
+    width: 60px;
+    height: 60px;
+}
+
+.commentaire .content {
     border: solid black 2px;
     padding: 10px 15px;
+    margin-top: 10px;
 }
 
 /* Fenêtre show trick */
@@ -158,36 +198,37 @@ h2{
     overflow: scroll;
     position: fixed;
     overflow-x: hidden;
-    transition: transform 1s; 
+    transition: transform 1s;
 }
 
-.box2{
+.box2 {
     transform: translate(-50%, -50%) scale(1, 1);
 }
 
-@media (min-width: 570px){
+@media (min-width: 570px) {
     h2 {
         font-size: 2rem;
     }
-
-    .edit-supp{
+    .edit-supp {
         width: 60px;
     }
-    
-    .infos{
+    .infos {
         margin: 0;
     }
-      
-    .laisser_commentaire form{
+    .laisser_commentaire form {
         margin: 0;
     }
-    
-        .commentaire{
+    .commentaire {
         margin: 0;
     }
 }
 
-@media (min-width: 768px){
+@media (min-width: 768px) {
+
+    .card-title {
+        font-size: 1.5rem;
+    }
+
     .box {
         padding: 10px;
         width: 90%;
@@ -195,43 +236,59 @@ h2{
         border: solid 1px;
     }
 
-    .infos{
-        margin: 0px 10%;
-    }
-      
-    .laisser_commentaire form{
-        margin: 0px 10%;
+    iframe {
+        height: auto;
+        width: 100%;
     }
 
-    .laisser_commentaire button{
+    .infos {
+        margin: 0px 10%;
+    }
+    .laisser_commentaire form, .laisser_commentaire .invalid-feedback {
+        margin: 0px 10%;
+    }
+    .laisser_commentaire button {
         white-space: nowrap;
     }
-    
-        .commentaire{
+    .commentaire {
         margin: 0px 10%;
     }
 }
 
-@media (min-width: 992px){
+@media (min-width: 992px) {
     h2 {
         font-size: 2.3rem;
     }
 
-    .description{
+    .image-home{
+        height: 100vh;
+    }
+
+    .description {
         margin: 0px 7%;
     }
-
-    .laisser_commentaire form{
+    .laisser_commentaire form, .laisser_commentaire .invalid-feedback {
         padding: 0 40px 25px 40px;
     }
-
-    .commentaire{
+    .commentaire {
         padding: 0 40px;
+    }
+    .down {
+        display: block;
     }
 }
 
-@media (min-width: 1200px){
+@media (min-width: 1200px) {
     h2 {
         font-size: 2.7rem;
+    }
+    .image-une img {
+        height: 130vh;
+        object-fit: cover;
+        object-position: top;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
     }
 }

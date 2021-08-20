@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ImageRepository::class)
@@ -35,6 +36,10 @@ class Image
      */
     private $trick;
 
+    /**
+     * @Assert\File(
+     *     disallowEmptyMessage = "Please upload a valid PDF")
+     */
     private $file;
 
     private $tempFilename;
@@ -94,7 +99,6 @@ class Image
     public function setFile(UploadedFile $file)
     {
         $this->file = $file;
-
         // On vérifie si on avait déjà un fichier pour cette entité 
         if ($this->extension !== null) {
             // On sauvegarde l'extension du fichier pour le supprimer plus tard 

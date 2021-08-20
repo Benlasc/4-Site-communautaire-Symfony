@@ -6,6 +6,7 @@ use App\Repository\CommentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -21,6 +22,7 @@ class Comment
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Votre commentaire ne doit pas être vide.")
      */
     private $content;
 
@@ -28,22 +30,6 @@ class Comment
      * @ORM\Column(type="datetime")
      */
     private $date;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Comment::class, inversedBy="children")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $Parent;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="Parent")
-     */
-    private $children;
-
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $depth;
 
     /**
      * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="comments")
@@ -56,11 +42,6 @@ class Comment
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
-
-    public function __construct()
-    {
-        $this->children = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -87,60 +68,6 @@ class Comment
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getParent(): ?self
-    {
-        return $this->Parent;
-    }
-
-    public function setParent(?self $Parent): self
-    {
-        $this->Parent = $Parent;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|self[]
-     */
-    public function getChildren(): Collection
-    {
-        return $this->children;
-    }
-
-    public function addChild(self $child): self
-    {
-        if (!$this->children->contains($child)) {
-            $this->children[] = $child;
-            $child->setParent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChild(self $child): self
-    {
-        if ($this->children->removeElement($child)) {
-            // set the owning side to null (unless already changed)
-            if ($child->getParent() === $this) {
-                $child->setParent(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getDepth(): ?int
-    {
-        return $this->depth;
-    }
-
-    public function setDepth(int $depth): self
-    {
-        $this->depth = $depth;
 
         return $this;
     }

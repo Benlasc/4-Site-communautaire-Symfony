@@ -51,8 +51,7 @@ class RegistrationController extends AbstractController
 
             $email = (new TemplatedEmail())
                 ->from(new Address('blascaze@aol.com', 'Benoît'))
-                // ->to($user->getEmail())
-                ->to('blascaze@aol.com')
+                ->to($user->getEmail())
                 ->subject('SnowTricks : veuillez confirmez votre email')
 
                 // path of the Twig template to render

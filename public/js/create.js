@@ -3,8 +3,6 @@ var ready = (callback) => {
     else document.addEventListener("DOMContentLoaded", callback);
 }
 
-
-// Ajout de nouvelles vidéos
 ready(() => {
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
     var $container = document.getElementById('trick_videos');
@@ -71,22 +69,8 @@ ready(() => {
             return false;
         });
     }
-
-    // Suppression des vidéos sur la page d'éddition
-    liens = document.getElementsByClassName('delete-video');
-
-    for (lien of liens) {
-        lien.addEventListener("click", function (e) {
-            e.preventDefault();
-            if (confirm("Voulez-vous supprimer cette vidéo ?")) {
-                // Clic sur OK
-                this.parentNode.parentNode.remove();
-            }
-        })
-    }
 });
 
-// Ajout de nouvelles images
 ready(() => {
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
     var $container = document.getElementById('trick_images');
@@ -151,19 +135,6 @@ ready(() => {
             e.preventDefault(); // évite qu'un # apparaisse dans l'URL
             return false;
         });
-    }
-
-    // Suppression des images sur la page d'éddition
-    liens = document.getElementsByClassName('delete-image');
-
-    for (lien of liens) {
-        lien.addEventListener("click", function (e) {
-            e.preventDefault();
-            if (confirm("Voulez-vous supprimer cette image ?")) {
-                // Clic sur OK
-                this.parentNode.parentNode.remove();
-            }
-        })
     }
 
     // Balise WYSIWYG
