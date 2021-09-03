@@ -19,8 +19,9 @@
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 
-slug.php
-
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
+
+slug.php
+php_errors.log

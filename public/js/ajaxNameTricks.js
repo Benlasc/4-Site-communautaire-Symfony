@@ -2,24 +2,24 @@
 
 function stringToHTML(str) {
     var parser = new DOMParser();
-    return doc = parser.parseFromString(str, 'text/html');
+    return doc = parser.parseFromString(str, "text/html");
 }
 
-var groupe = document.getElementById('trick_groupe');
+var groupe = document.getElementById("trick_groupe");
 
-groupe.addEventListener('change', async (event) => {
-    var form = groupe.closest('form');
+groupe.addEventListener("change", async (event) => {
+    var form = groupe.closest("form");
     var data = new FormData();
-    data.append(groupe.getAttribute('name'),groupe.value);
-    // ex groupe.getAttribute('name') = trick[groupe]
+    data.append(groupe.getAttribute("name"),groupe.value);
+    // ex groupe.getAttribute("name") = trick[groupe]
     // ex groupe.value = 3
 
     try {
         // requête asynchrone
-        let response = await fetch(form.getAttribute('action'), {
-            method: form.getAttribute('method'),
+        let response = await fetch(form.getAttribute("action"), {
+            method: form.getAttribute("method"),
             headers: {
-                'X-Requested-With': 'XMLHttpRequest'
+                "X-Requested-With": "XMLHttpRequest"
             },
             body: data
         });
@@ -27,11 +27,11 @@ groupe.addEventListener('change', async (event) => {
         if (response) {
             let responseData = await response.text();
             let html = stringToHTML(responseData);
-            let newNames = html.getElementById('trick_name');
+            let newNames = html.getElementById("trick_name");
             newNames.classList.remove("is-invalid");
-            document.getElementById('trick_name').replaceWith(html.getElementById('trick_name'))
+            document.getElementById("trick_name").replaceWith(html.getElementById("trick_name"));
         } else {
-            console.error("Réponse du serveur : ", response.status);
+            console.log("Réponse du serveur : ", response.status);
         }
     } catch (error) {
         console.log(error);
