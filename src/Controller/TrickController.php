@@ -5,11 +5,16 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\CommentType;
+use App\Form\TrickEditType;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
+use App\Repository\GroupeRepository;
 use App\Repository\TrickRepository;
 use App\services\Slug;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
+use Exception;
 use PhpParser\Node\Stmt\TryCatch;
 // use PhpParser\Node\Expr\Cast\String_;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -26,10 +31,18 @@ class TrickController extends AbstractController
     use TargetPathTrait;
 
     #[Route('/', name: 'trick_index', methods: ['GET'])]
-    public function index(TrickRepository $trickRepository): Response
+    public function index(TrickRepository $trickRepository, GroupeRepository $groupeRepository): Response
     {
+        $groupes = $groupeRepository->findAll();
+
+        // On récupère les Tricks créées par les utilisateurs pour chaque groupe
+        foreach ($groupes as $groupe) {
+            $groupesWithTricks[$groupe->getName()] = $trickRepository->findWithAuthor($groupe->getName());
+        }
+
+
         return $this->render('trick/index.html.twig', [
-            'tricks' => $trickRepository->findAll(),
+            'groupes' => $groupesWithTricks
         ]);
     }
 
@@ -42,7 +55,31 @@ class TrickController extends AbstractController
         }
 
         $trick = new Trick();
-        $form = $this->createForm(TrickType::class, $trick);
+
+        //On attribue le premier groupe à cette figure pour afficher les figures du premier groupe dans le formulaire
+        $em = $this->getDoctrine()->getManager();
+        $groupe = $em->getRepository(\App\Entity\Groupe::class)->find(1);
+        $trick->setGroupe($groupe);
+
+        //Si méthode Post et non Ajax, on récupère la figure correspondante pour la mise à jour (car l'ensemble des figures existent déjà dans la base de données)
+        if ($request->getMethod() == 'POST' && !$request->isXmlHttpRequest()) {
+            $trickFormData = $request->request->get('trick');
+            if (isset($trickFormData['name'])) {
+                $trickId = $trickFormData['name'];
+                $trick = $em->getRepository(\App\Entity\Trick::class)->find($trickId);
+                // Si cette figure possède un auteur, on bloque la modifiation
+                if ($trick->getAuthor()) {
+                    $this->addFlash('danger', 'Cette figure a déjà été créée par un utilisateur.');
+                    return $this->redirectToRoute('trick_new');
+                }
+            }
+        }
+
+        $form = $this->createForm(TrickType::class, $trick, [
+            'action' => $this->generateUrl('trick_new'),
+            'method' => 'POST'
+        ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -69,9 +106,25 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        $this->denyAccessUnlessGranted('author_edit', $trick, "Vous n'avez pas le droit de modifier cette figure.");
+        $form = $this->createForm(TrickEditType::class, $trick);
 
-        $form = $this->createForm(TrickType::class, $trick);
+        //Réindexation du tableau 'images' de la requête avant la validation des données
+        $requestFiles = $request->files->get('trick_edit');
+        if (isset($requestFiles['images'])) {
+            $requestFiles['images'] = array_values($requestFiles['images']);
+            $request->files->set('trick_edit', $requestFiles);
+        }
+
+        //Réindexation du tableau 'videos' de la requête avant la validation des données
+        /**
+         * @var Array $requestIframes
+         */
+        $requestIframes = $request->request->get('trick_edit');
+        if (isset($requestIframes['videos'])) {
+            $requestIframes['videos'] = array_values($requestIframes['videos']);
+            $request->request->set('trick_edit', $requestIframes);
+        }
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -86,22 +139,50 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'trick_delete', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
-    public function delete(Request $request, Trick $trick): Response
+    #[Route('/{id}/new', name: 'trick_edit_home', methods: ['GET', 'POST'])]
+    public function newTrick(Request $request, Trick $trick): Response
     {
-        $this->denyAccessUnlessGranted('author_delete', $trick, "Vous n'avez pas le droit de supprimer cette figure.");
-
-        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($trick);
-            $entityManager->flush();
+        if (!$this->isGranted('ROLE_USER')) {
+            $this->addFlash('danger', 'Veuillez vous connecter pour accéder à cette page');
+            return $this->redirectToRoute('app_login');
         }
 
-        return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+        $form = $this->createForm(TrickEditType::class, $trick);
+
+        //Réindexation du tableau 'images' de la requête avant la validation des données
+        $requestFiles = $request->files->get('trick_edit');
+        if (isset($requestFiles['images'])) {
+            $requestFiles['images'] = array_values($requestFiles['images']);
+            $request->files->set('trick_edit', $requestFiles);
+        }
+
+        //Réindexation du tableau 'videos' de la requête avant la validation des données
+        /**
+         * @var Array $requestIframes
+         */
+        $requestIframes = $request->request->get('trick_edit');
+        if (isset($requestIframes['videos'])) {
+            $requestIframes['videos'] = array_values($requestIframes['videos']);
+            $request->request->set('trick_edit', $requestIframes);
+        }
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setCreationDate(new DateTime('now'));
+            $trick->setAuthor($this->getUser());
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('info', "Les modifications ont bien été enregristrées");
+        }
+
+        return $this->renderForm('trick/edit.html.twig', [
+            'trick' => $trick,
+            'form' => $form,
+        ]);
     }
 
     #[Route('/show-{id}', name: 'trick_show', methods: ['GET', 'POST'])]
-    public function test(Request $request, Trick $trick = null, FirewallMap $firewallMap): Response
+    public function show(Request $request, Trick $trick = null, FirewallMap $firewallMap): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment, [
@@ -155,7 +236,6 @@ class TrickController extends AbstractController
 
         //Requête Ajax ?
         if ($request->isXmlHttpRequest()) {
-
             echo $this->renderView('trick/showAjax.html.twig', [
                 'trick' => $trick,
                 'comments' => $comments,
@@ -173,5 +253,24 @@ class TrickController extends AbstractController
         ]);
 
         $this->container;
+    }
+
+    #[Route('/{id}/delete', name: 'trick_delete', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function delete(Request $request, Trick $trick): Response
+    {
+        $this->denyAccessUnlessGranted('author_delete', $trick, "Vous n'avez pas le droit de supprimer cette figure.");
+        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
+            $trick->setAuthor(null);
+            $trick->setDescription(null);
+            $trick->setCreationDate(null);
+            $trick->setUpdateDate(null);
+            $trick->getVideos()->clear();
+            $trick->getImages()->clear();
+            $trick->getComments()->clear();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
     }
 }

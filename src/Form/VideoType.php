@@ -15,7 +15,7 @@ class VideoType extends AbstractType
     {
         $builder
             ->add('iframe', TextareaType::class, [
-                'help' => 'Copiez la balise iframe pour intégrer la vidéo (mettre width à 100%)',
+                'help' => 'Copiez la balise iframe pour intégrer la vidéo',
                 'label' => False,
                 'constraints' => [
                     new NotNull([

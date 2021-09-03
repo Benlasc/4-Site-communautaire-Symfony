@@ -1,4 +1,6 @@
 
+// Code JavaScript pour la hauteur dynamique de l'image home, le filtre et les requêtes Ajax pour afficher la page show d'une figure
+
 //Hauteur de l'image home
 var image = document.querySelector('.image-home');
 var hauteur = document.querySelector('nav').offsetHeight;
@@ -10,21 +12,41 @@ window.addEventListener('resize', function (event) {
     image.style.height = image.offsetHeight - hauteur + "px";
 });
 
-// // Taille de la police des titres des figures
-
-// titres = document.getElementsByClassName('card-title');
-// for (const titre of titres) {
-//     titre.style.fontSize = titre.offsetWidth * 0.1 + 'px';
-// }
-
-// window.addEventListener('resize', function (event) {
-//     titres = document.getElementsByClassName('card-title');
-//     for (const titre of titres) {
-//         titre.style.fontSize = titre.offsetWidth * 0.1 + 'px';
-//     }
-// });
-
-// test ASYNCHRONE
+//filtre pour chercher des figures
+let input = document.getElementById('trickFilter');
+input.focus();
+input.addEventListener('keyup', (event) => {
+    let val = input.value;
+    if (val =='') {
+        document.querySelectorAll('.col').forEach(bloc => bloc.style.display = "block");
+        document.querySelectorAll('.card-title > a span').forEach(span => span.classList.remove("highlighted"));
+        return true;
+    }
+    let regex = "(.*)";
+    for (const i in val) {
+        regex += `(${val[i]})(.*)`;            
+        }
+    document.querySelectorAll('.col').forEach(bloc => bloc.style.display = "block")
+    let textsFiltered = document.querySelectorAll('.card-title > a');
+    for (const lien of textsFiltered) {
+        let resultats = lien.innerText.match(new RegExp(regex,"i"));
+        if (resultats) {
+            let string = '';
+            for (const i in resultats) {
+                if (i > 0) {
+                    if (i % 2 == 0) {
+                        string += '<span class="highlighted">' + resultats[i] + '</span>';
+                    } else {
+                        string += resultats[i];
+                    }
+                }
+            }
+            lien.innerHTML = string;
+        } else {
+            lien.parentElement.parentElement.parentElement.parentElement.style.display = "none";
+        }
+    }
+});
 
 function stringToHTML(str) {
     var parser = new DOMParser();
@@ -32,6 +54,7 @@ function stringToHTML(str) {
     return doc.body.firstElementChild;
 }
 
+// Requête Ajax pour afficher une fenêtre show trick
 liens = document.getElementsByClassName('liens-ajax');
 for (const lien of liens) {
     lien.addEventListener('click', async function (e) {

@@ -4,7 +4,6 @@ namespace App\Security\Listener;
 
 use App\Entity\User;
 use App\Security\Badges\BadgeConfirmed;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\Passport\UserPassportInterface;
 use Symfony\Component\Security\Http\Event\CheckPassportEvent;
@@ -26,9 +25,7 @@ class CheckConfirmedListener
             if ($user->getConfirmed() === True) {
                 $badge->markResolved();
             }else {
-                throw new CustomUserMessageAuthenticationException("Votre compte n'est pas encore activé.");
-                
-                
+                throw new CustomUserMessageAuthenticationException("Votre compte n'est pas encore activé.");               
             }
         }
         return;

@@ -29,9 +29,9 @@ class ImageType extends AbstractType
                         'mimeTypesMessage' => 'Veuillez fournir une image valide (jpeg ou png)',
                         'maxSizeMessage' => "L'image doit peser moins de 1024 ko"
                     ]),
-                    new NotNull([
-                        'message' => 'Veuillez fournir une image.',
-                    ])
+                    // new NotNull([
+                    //     'message' => 'Veuillez fournir une image.',
+                    // ])
                 ],
                 'help' => 'Jpeg ou png (taille max : 1024 ko)',
             ]);

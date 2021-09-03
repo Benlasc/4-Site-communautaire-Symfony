@@ -1,8 +1,10 @@
+// Code JavaScript pour ajouter et retirer de nouvelles images ou vidéos dans le formulaire permettant de modifier une figure
+// +balise WYSIWYG pour la description
+
 var ready = (callback) => {
     if (document.readyState != "loading") callback();
     else document.addEventListener("DOMContentLoaded", callback);
 }
-
 
 // Ajout de nouvelles vidéos
 ready(() => {
@@ -28,7 +30,9 @@ ready(() => {
     });
 
     // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-    var index = $container.getElementsByTagName('input').length;
+    // var index = $container.getElementsByTagName('input').length;
+    // Rem : j'ai mis document.get... à la place de $container.get...car les autres input sont en dehors de $container 
+    var index = document.getElementsByTagName('input').length;
 
     function stringToHTML(str) {
         var parser = new DOMParser();
@@ -108,9 +112,6 @@ ready(() => {
         return false;
     });
 
-    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-    var index = $container.getElementsByTagName('input').length;
-
     function stringToHTML(str) {
         var parser = new DOMParser();
         var doc = parser.parseFromString(str, 'text/html');
@@ -123,7 +124,7 @@ ready(() => {
         // Dans le contenu de l'attribut « data-prototype », on remplace :
         // - le texte "__name__label__" qu'il contient par le label du champ
         // - le texte "__name__" qu'il contient par le numéro du champ
-        var $prototype = stringToHTML($container.getAttribute("data-prototype").replace(/__name__label__/g, 'Image').replace(/__name__/g, index));
+        var $prototype = stringToHTML($container.getAttribute("data-prototype").replace(/__name__label__/g, 'Image').replace(/__name__/g, $container.dataset.index));
 
         // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
         ajouterLienSuppression($prototype);
@@ -132,7 +133,7 @@ ready(() => {
         $container.insertAdjacentElement("beforeend", $prototype);
 
         // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-        index++;
+        $container.dataset.index++;
     }
 
     // La fonction qui ajoute un lien de suppression d'une catégorie
@@ -171,6 +172,9 @@ ready(() => {
         .create(document.querySelector('.ckeditor'), {
             removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed']
         })
+        .then (editor => {
+            editorTextarea = editor;
+         })
         .catch(error => {
             console.error(error);
         });

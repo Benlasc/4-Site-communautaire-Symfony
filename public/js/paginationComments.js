@@ -1,3 +1,5 @@
+// Code JavaScript pour activer le bouton "Afficher plus de commentaires" sur la page d'une figure
+
 let commentsList = document.getElementsByClassName('commentaire');
 let numberOfComments = 5;
 first = 0

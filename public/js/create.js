@@ -1,3 +1,6 @@
+// Code JavaScript pour ajouter et retirer de nouvelles images ou vidéos dans le formulaire permettant d'ajouter de nouvelles figures
+// +balise WYSIWYG pour la description
+
 var ready = (callback) => {
     if (document.readyState != "loading") callback();
     else document.addEventListener("DOMContentLoaded", callback);

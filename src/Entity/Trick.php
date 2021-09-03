@@ -25,25 +25,27 @@ class Trick
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Groupe::class, inversedBy="tricks")
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Le groupe de la figure n'est pas fourni")
+     */
+    private $groupe;
+
+    /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le nom de la figure n'est pas fourni")
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=70, nullable=true)
-     * @Assert\NotBlank(message="Le groupe de la figure n'est pas fourni")
-     */
-    private $groupe;
-
-    /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank(message="La description de la figure n'est pas fourni")
+     * @Assert\Length(min = 15, minMessage="La description de la figure doit faire au moins {{ limit }} caractères.")
      */
     private $description;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $creationDate;
 
@@ -58,7 +60,7 @@ class Trick
     private $author;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $slug;
 
@@ -101,24 +103,12 @@ class Trick
         return $this;
     }
 
-    public function getGroupe(): ?string
-    {
-        return $this->groupe;
-    }
-
-    public function setGroupe(?string $groupe): self
-    {
-        $this->groupe = $groupe;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -130,7 +120,7 @@ class Trick
         return $this->creationDate;
     }
 
-    public function setCreationDate(\DateTimeInterface $creationDate): self
+    public function setCreationDate(?\DateTimeInterface $creationDate): self
     {
         $this->creationDate = $creationDate;
 
@@ -261,5 +251,21 @@ class Trick
         }
 
         return $this;
+    }
+
+    public function getGroupe(): ?Groupe
+    {
+        return $this->groupe;
+    }
+
+    public function setGroupe(?Groupe $groupe): self
+    {
+        $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    public function __toString() {
+        return $this->name;
     }
 }

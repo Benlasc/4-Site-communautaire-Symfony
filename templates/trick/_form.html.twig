@@ -1,15 +1,15 @@
 {{ form_start(form) }}
 
 <div class="mb-3">
-	{{form_label(form.name)}}
-	{{form_widget(form.name)}}
-	{{form_errors(form.name)}}
-</div>
-
-<div class="mb-3">
 	{{form_label(form.groupe)}}
 	{{form_widget(form.groupe)}}
 	{{form_errors(form.groupe)}}
+</div>
+
+<div class="mb-3">
+	{{form_label(form.name)}}
+	{{form_widget(form.name)}}
+	{{form_errors(form.name)}}
 </div>
 
 <div class="mb-3">
@@ -24,7 +24,7 @@
 		{% for video in form.videos.children %}
 			<div>
 				{{form_label(video,"Modifier la vidéo")}}
-				<div style="position: relative;">
+				<div style="position: relative; padding-bottom: 56.25%;">
 					{{ trick.getVideos()[i].iframe | raw}}
 					<a href="" class="delete-video">
 						<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="red" class="bi bi-x-square-fill" viewbox="0 0 16 16" style="position: absolute; bottom: 2%; right: 0%;">
@@ -41,12 +41,12 @@
 	</div>
 {% endif %}
 
-<div class="mb-3" id="trick_videos" data-prototype="<fieldset class=&quot;mb-3&quot;><legend class=&quot;col-form-label required&quot;>__name__label__</legend><div id=&quot;trick_videos___name__&quot;><div class=&quot;mb-3&quot;><textarea id=&quot;trick_videos___name___iframe&quot; name=&quot;trick[videos][__name__][iframe]&quot; required=&quot;required&quot; aria-describedby=&quot;trick_videos___name___iframe_help&quot; class=&quot;form-control&quot;></textarea> <p id=&quot;trick_videos___name___iframe_help&quot; class=&quot;form-text mb-0 help-text&quot;>Copiez la balise iframe pour intégrer la vidéo</p></div></div> </fieldset>"></div>
+<div id="trick_videos" class="mb-3" data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.videos.vars.prototype, {'attr': {'class': 'mt-3'}})|e('html_attr') }}"></div>
 
 {% if trick.creationDate %}
 	<div class="mb-3">
-		{% set i = 0 %}
-		{% for image in form.images.children %}
+
+		{% for i,image in form.images.children %}
 			<div>
 				{{form_label(image, "Modifier l'image")}}
 				<div style="position: relative;">
@@ -63,16 +63,14 @@
 				{{form_help(image.file)}}
 				{{form_errors(image.file)}}
 			</div>
-			{% set i = i + 1 %}
 		{% endfor %}
 	</div>
 {% endif %}
 
-<div class="mb-3" id="trick_images"
-    data-prototype="<fieldset class=&quot;mb-3&quot;><legend class=&quot;col-form-label&quot;>__name__label__</legend><div id=&quot;trick_images___name__&quot;><div class=&quot;mb-3&quot;><input type=&quot;file&quot; id=&quot;trick_images___name___file&quot; name=&quot;trick[images][__name__][file]&quot; required=&quot;required&quot; aria-describedby=&quot;trick_images___name___file_help&quot; class=&quot;form-control&quot; /><p id=&quot;trick_images___name___file_help&quot; class=&quot;form-text mb-0 help-text&quot;>Jpeg ou png (taille max : 1024 ko)</p></div></div></fieldset>">
-</div>
+<div id="trick_images" class="mb-3" data-index="{{ form.images|length > 0 ? form.images|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.images.vars.prototype, {'attr': {'class': 'mt-3'}})|e('html_attr') }}"></div>
 
 {{ form_widget(form._token) }}
 
 <button class="btn btn-primary">{{ button_label|default('Sauvegarder') }}</button>
+
 <a class="btn btn-secondary" href="{{ path('trick_index') }}">Retour</a>

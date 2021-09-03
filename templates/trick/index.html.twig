@@ -9,78 +9,94 @@
 					<g>
 						<g>
 							<path d="M256,0C114.618,0,0,114.618,0,256s114.618,256,256,256s256-114.618,256-256S397.382,0,256,0z M256,469.333
-																																																																																																																								                       c-117.818,0-213.333-95.515-213.333-213.333S138.182,42.667,256,42.667S469.333,138.182,469.333,256S373.818,469.333,256,469.333
-																																																																																																																								                       z"/>
+																																																																																								                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    c-117.818,0-213.333-95.515-213.333-213.333S138.182,42.667,256,42.667S469.333,138.182,469.333,256S373.818,469.333,256,469.333
+																																																																																								                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    z"/>
 							<path d="M347.582,198.248L256,289.83l-91.582-91.582c-8.331-8.331-21.839-8.331-30.17,0c-8.331,8.331-8.331,21.839,0,30.17
-																																																																																																									                       l106.667,106.667c8.331,8.331,21.839,8.331,30.17,0l106.667-106.667c8.331-8.331,8.331-21.839,0-30.17
-																																																																																																									                       C369.42,189.917,355.913,189.917,347.582,198.248z"/>
+																																																																													                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    l106.667,106.667c8.331,8.331,21.839,8.331,30.17,0l106.667-106.667c8.331-8.331,8.331-21.839,0-30.17
+																																																																													                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    C369.42,189.917,355.913,189.917,347.582,198.248z"/>
 						</g>
 					</g>
 				</g>
 			</svg>
 		</a>
 	</div>
+	<div class="container mb-3" id="cards">
+		<h2 class="title h2 mb-4 text-center" style="color:#cc3513">TOUTES LES FIGURES DE SWOWBOARD !</h2>
+		<div class="add-search mb-4">
+			<h3>
+				<a href="{{ path('trick_new')}}" class="h3 text-decoration-none text-dark">
+					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-circle mb-2" viewbox="0 0 16 16">
+						<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+					</svg>
+					Ajouter une nouvelle figure
+				</a>
+			</h3>
 
-	<div class="container mb-3">
-		<h3 class="mb-4">
-			<a href="{{ path('trick_new') }}" class="h3 text-decoration-none text-dark">
-				<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-circle mb-2" viewbox="0 0 16 16">
-					<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-					<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-				</svg>  
-				  Ajouter une nouvelle figure !
-			</a>
-		</h3>
+			<input type="search" id="trickFilter" class="form-control rounded" placeholder="Chercher une figure"/>
 
-		{% if tricks %}
-			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-4" id="cards">
-				{% set i = 1 %}
-				{% for trick in tricks %}
-					<div class="col">
-						<div class="card h-100">
-							<div class="wrapper">
-								<a class="liens-ajax" href="{{ path('trick_show', {'id': trick.id}) }}">
-									{% if trick.getImages().isEmpty() %}
-										<img src="/assets/trick.jpg" class="card-img-top" alt="trick" style="object-fit: fill;">
-									{% else %}
-										<img src="{{ trick.getImages[0].getWebPath() }}" class="card-img-top" alt="{{ trick.getImages[0].alt }}">
-									{% endif %}
-								</a>
-							</div>
-							<div class="card-body card-body-home">
-								<h5 class="card-title">
-									<a class="liens-ajax" href="{{ path('trick_show', {'id': trick.id}) }}">
-										{{trick.name}}
-									</a>
-								</h5>
-								{% if is_granted("author_edit", trick)  %}
-									<a href="{{ path('trick_edit', {'id': trick.id}) }}">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewbox="0 0 16 16">
-											<path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-										</svg>
-									</a>
-								{% endif %}
-								{% if is_granted("author_delete", trick)  %}
-									<form id="form-delete-{{i}}" method="post" action="{{ path('trick_delete', {'id': trick.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette figure ?');">
-										<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
-										<a href='javascript:void(0)' onclick="if (document.getElementById('form-delete-{{i}}').onsubmit()) {
-																																																																	    document.getElementById('form-delete-{{i}}').submit();
-																																																																	}">
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewbox="0 0 16 16">
-												<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-											</svg>
+		</div>
+		{% for groupe, tricks in groupes %}
+			{% if tricks %}
+				<div class="h2 groupe-name mb-3" style="color: #1f9fdc;">{{groupe}}</div>
+				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-4 mb-4">
+					{% for trick in tricks %}
+						<div class="col">
+							<div class="card h-100">
+								{% if trick.author is null %}
+									<div class="wrapper">
+										<a href="{{ path('trick_edit_home', {'id': trick.id}) }}">
+											<img src="/assets/trickToCreate.jpg" class="card-img-top" alt="trick" style="object-fit: fill;">
 										</a>
-									</form>
+									</div>
+									<div class="card-body card-body-home">
+										<h5 class="card-title">
+											<a href="{{ path('trick_edit_home', {'id': trick.id}) }}">
+												{{trick.name}}
+											</a>
+										</h5>
+									</div>
+								{% else %}
+									<div class="wrapper">
+										<a class="liens-ajax" href="{{ path('trick_show', {'id': trick.id}) }}">
+											{% if trick.getImages().isEmpty() %}
+												<img src="/assets/trick.jpg" class="card-img-top" alt="trick" style="object-fit: fill;">
+											{% else %}
+												<img src="{{ trick.getImages[0].getWebPath() }}" class="card-img-top" alt="{{ trick.getImages[0].alt }}">
+											{% endif %}
+										</a>
+									</div>
+									<div class="card-body card-body-home">
+										<h5 class="card-title">
+											<a class="liens-ajax" href="{{ path('trick_show', {'id': trick.id}) }}">
+												{{trick.name}}
+											</a>
+										</h5>
+										{% if is_granted("author_edit", trick)  %}
+											<a href="{{ path('trick_edit', {'id': trick.id}) }}">
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewbox="0 0 16 16">
+													<path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+												</svg>
+											</a>
+										{% endif %}
+										{% if is_granted("author_delete", trick)  %}
+											<form id="form-delete-{{trick.id}}" method="post" action="{{ path('trick_delete', {'id': trick.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette figure ?');">
+												<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
+												<a href='javascript:void(0)' onclick="if (document.getElementById('form-delete-{{trick.id}}').onsubmit()) {document.getElementById('form-delete-{{trick.id}}').submit();}">
+													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewbox="0 0 16 16">
+														<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+													</svg>
+												</a>
+											</form>
+										{% endif %}
+									</div>
 								{% endif %}
 							</div>
 						</div>
-					</div>
-					{% set i = i + 1 %}
-				{% endfor %}
-			</div>
-		{% else %}
-			<h3 id="cards">Aucune figure enregistrée !</h3>
-		{% endif %}
+					{% endfor %}
+				</div>
+			{% endif %}
+		{% endfor %}
 	</div>
 {% endblock %}
 
