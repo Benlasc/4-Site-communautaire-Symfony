@@ -222,9 +222,9 @@ class TrickController extends AbstractController
 
             //Requête Ajax ?
             if ($request->isXmlHttpRequest()) {
-                echo $this->renderView('trick/_comment.html.twig', [
+                print_r($this->renderView('trick/_comment.html.twig', [
                     'comment' => $comment
-                ]);
+                ]));
                 die();
             }
             //Sinon
@@ -236,11 +236,11 @@ class TrickController extends AbstractController
 
         //Requête Ajax ?
         if ($request->isXmlHttpRequest()) {
-            echo $this->renderView('trick/showAjax.html.twig', [
+            print_r($this->renderView('trick/showAjax.html.twig', [
                 'trick' => $trick,
                 'comments' => $comments,
                 'form' => $form->createView()
-            ]);
+            ]));
 
             die();
         }

@@ -18,7 +18,7 @@
   align-items: baseline;
 }
 
-.add-search>h3 {
+.add-search > h3 {
   text-align: center;
   width: 100%;
   font-size: 10px;
@@ -26,7 +26,7 @@
 
 .highlighted {
   background-color: #2ba6cb;
-  color: #FFF;
+  color: #fff;
 }
 
 .col {
@@ -39,7 +39,7 @@
   align-items: center;
 }
 
-.card-body-home>* {
+.card-body-home > * {
   flex: 0 1 0;
   margin-left: 10px;
   text-align: end;
@@ -55,7 +55,7 @@
 }
 
 .card-title {
-  margin-bottom: 0rem;
+  margin-bottom: 0;
   text-align: center;
   min-width: 75%;
   width: 100%;
@@ -237,15 +237,19 @@ iframe {
   h2 {
     font-size: 2rem;
   }
+  
   .edit-supp {
     width: 60px;
   }
+
   .infos {
     margin: 0;
   }
+
   .laisser_commentaire form {
     margin: 0;
   }
+
   .commentaire {
     margin: 0;
   }
@@ -255,21 +259,26 @@ iframe {
   .card-title {
     font-size: 1.5rem;
   }
+
   .box {
     padding: 10px;
     width: 90%;
     height: 90vh;
     border: solid 1px;
   }
+
   .infos {
     margin: 0 10%;
   }
+
   .laisser_commentaire form, .laisser_commentaire .invalid-feedback {
     margin: 0 10%;
   }
+
   .laisser_commentaire button {
     white-space: nowrap;
   }
+
   .commentaire {
     margin: 0 10%;
   }
@@ -279,22 +288,28 @@ iframe {
   h2 {
     font-size: 2.3rem;
   }
+
   .image-home {
     height: 100vh;
   }
+
   .add-search {
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
   .description {
     margin: 0 7%;
   }
+
   .laisser_commentaire form, .laisser_commentaire .invalid-feedback {
     padding: 0 40px 25px 40px;
   }
+  
   .commentaire {
     padding: 0 40px;
   }
+
   .down {
     display: block;
   }
@@ -304,19 +319,23 @@ iframe {
   h2 {
     font-size: 2.7rem;
   }
+
   .image-une img {
     height: 130vh;
     object-fit: cover;
     object-position: top;
   }
-  .add-search>h3 {
+
+  .add-search > h3 {
     text-align: start;
     width: 418px;
     font-size: 10px;
   }
-  .add-search>input {
+
+  .add-search > input {
     width: 350px;
   }
+
   .card-title {
     font-size: 1.3rem;
   }
