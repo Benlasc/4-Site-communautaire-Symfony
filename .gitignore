@@ -23,5 +23,6 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
-slug.php
 php_errors.log
+.vscode
+.idea

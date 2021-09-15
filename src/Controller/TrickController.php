@@ -10,7 +10,6 @@ use App\Form\TrickType;
 use App\Repository\CommentRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\TrickRepository;
-use App\services\Slug;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
@@ -47,7 +46,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/new', name: 'trick_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, Slug $slug): Response
+    public function new(Request $request): Response
     {
         if (!$this->isGranted('ROLE_USER')) {
             $this->addFlash('danger', 'Veuillez vous connecter pour accéder à cette page');
@@ -84,7 +83,6 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $trick->setCreationDate(new DateTime('now'));
-            $trick->setSlug($slug->Slug($trick->getName()));
             $trick->setAuthor($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);

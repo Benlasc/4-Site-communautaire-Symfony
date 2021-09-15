@@ -6,10 +6,20 @@ use App\Entity\Groupe;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Trick;
+use App\services\Slug;
 use DateTime;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 
 class TricksFixtures extends Fixture
 {
+
+    private $slug;
+
+    public function __construct(Slug $slug)
+    {
+        $this->slug = $slug;
+    }
+
     // Dans l'argument de la méthode load, l'objet $manager est l'EntityManager 
     public function load(ObjectManager $manager)
     {
@@ -170,6 +180,7 @@ class TricksFixtures extends Fixture
             // Entregistrement des figures            
             foreach ($tricksGroupe as $trick) {
                 $newTrick = (new Trick())->setName($trick)->setGroupe($newGroupe);
+                $newTrick->setSlug($this->slug->Slug($newTrick->getName()));
                 $manager->persist($newTrick);
             }
         }

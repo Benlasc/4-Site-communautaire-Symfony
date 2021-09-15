@@ -33,7 +33,10 @@ php bin/console doctrine:fixtures:load
 php bin/console server:run
 ```
 
-## Se connecter en tant qu'administrateur
+## Se connecter en tant qu'administrateur ou utilisateur
 
 Email : admin@domain.fr
+Password : Azerty20
+
+Email : user@domain.fr
 Password : Azerty20
