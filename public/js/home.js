@@ -12,6 +12,16 @@ window.addEventListener("resize", function (event) {
     image.style.height = image.offsetHeight - hauteur + "px";
 });
 
+// Bouton Javascript pour remonter la page d'accueil
+let scrollUp = document.getElementById('scrollUp');
+window.addEventListener('scroll', function(e) { //Fonction appelée quand on descend la page
+    if (this.scrollY > 951 ) {  // Quand on est à 200pixels du haut de page,
+        scrollUp.style.right = '10px'; // Replace à 10pixels de la droite l'image
+    } else { 
+        scrollUp.style.right = '-100px'; // Enlève les attributs CSS affectés par javascript
+    }
+});
+
 //filtre pour chercher des figures
 let input = document.getElementById("trickFilter");
 input.focus();
