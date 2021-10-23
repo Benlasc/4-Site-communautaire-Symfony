@@ -4,13 +4,22 @@ SnowTricks est un site internet permettant aux internautes de consulter et enric
 
 ## Pré-requis
 
-PHP >= 7.2.5
+PHP >= 7.2.5 
 Composer
 
 ## Installer les dépendances
 
 ```bash
 composer install
+```
+
+## Indiquer l'URL de votre base de données et le MAILER_DSN 
+
+Créez un fichier « .env.local » à la racine du projet et indiquez les deux variables suivantes :
+
+```bash
+MAILER_DSN=smtp://...
+DATABASE_URL="mysql://..."
 ```
 
 ## Installer la base de données et les tables
@@ -23,7 +32,6 @@ php bin/console doctrine:schema:update --force
 ## Charger les figures et le compte administrateur dans la base de donnnées
 
 ```bash
-composer require --dev orm-fixtures
 php bin/console doctrine:fixtures:load
 ```
 
