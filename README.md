@@ -9,6 +9,10 @@ Front-end : CSS - Bootstrap - JavaScript Vanilla
 PHP >= 7.2.5 
 Composer
 
+## Télécharger le projet
+
+Téléchargez ou clonez le projet ([voir la documentation GitHub](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository)). 
+
 ## Indiquer l'URL de la base de données et le MAILER_DSN 
 
 Créez un fichier « .env.local » à la racine du projet et indiquez les deux variables suivantes :
