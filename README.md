@@ -1,8 +1,8 @@
-Projet pédagogique: créer un site communautaire permettant aux internautes de consulter et enrichir un annuaire des figures de snowboard.
+Projet pédagogique : créer un site communautaire permettant aux internautes de consulter et enrichir un annuaire des figures de snowboard.
 
 Back-end : Symfony 5.3 - MySQL 
 
-Front-end : CSS - Bootstrap - JavaScript Vanilla
+Front-end : CSS - Bootstrap - JavaScript Vanilla 
 
 ### Environnement de développement
 
