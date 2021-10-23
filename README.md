@@ -4,8 +4,6 @@ Back-end : Symfony 5.3 - MySQL
 
 Front-end : CSS - Bootstrap - JavaScript Vanilla 
 
-### Environnement de développement
-
 ## Pré-requis
 
 PHP >= 7.2.5 
