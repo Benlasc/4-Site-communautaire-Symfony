@@ -11,12 +11,6 @@ Front-end : CSS - Bootstrap - JavaScript Vanilla
 PHP >= 7.2.5 
 Composer
 
-## Installer les dépendances
-
-```bash
-composer install
-```
-
 ## Indiquer l'URL de la base de données et le MAILER_DSN 
 
 Créez un fichier « .env.local » à la racine du projet et indiquez les deux variables suivantes :
@@ -24,6 +18,12 @@ Créez un fichier « .env.local » à la racine du projet et indiquez les deux v
 ```bash
 MAILER_DSN=smtp://...
 DATABASE_URL="mysql://..."
+```
+
+## Installer les dépendances
+
+```bash
+composer install
 ```
 
 ## Installer la base de données et les tables
