@@ -1,4 +1,8 @@
-SnowTricks est un site internet permettant aux internautes de consulter et enrichir un annuaire des figures de snowboard.
+Projet pédagogique: créer un site communautaire permettant aux internautes de consulter et enrichir un annuaire des figures de snowboard.
+
+Back-end : Symfony 5.3 - MySQL 
+
+Front-end : CSS - Bootstrap - JavaScript Vanilla
 
 ### Environnement de développement
 
@@ -13,7 +17,7 @@ Composer
 composer install
 ```
 
-## Indiquer l'URL de votre base de données et le MAILER_DSN 
+## Indiquer l'URL de la base de données et le MAILER_DSN 
 
 Créez un fichier « .env.local » à la racine du projet et indiquez les deux variables suivantes :
 
