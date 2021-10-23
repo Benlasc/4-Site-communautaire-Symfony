@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Trick;
-use App\Form\Type\CkeditorType;
+use App\Form\CkeditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security\Listener;
+namespace App\Security\Listeners;
 
 use App\Entity\User;
 use App\Security\Badges\BadgeConfirmed;

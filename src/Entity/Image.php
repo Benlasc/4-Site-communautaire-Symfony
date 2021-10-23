@@ -164,7 +164,7 @@ class Image
     }
 
     /** 
-     * @ORM\PostRemove() 
+     * @ORM\PostRemove()
      */
     public function removeUpload()
     {

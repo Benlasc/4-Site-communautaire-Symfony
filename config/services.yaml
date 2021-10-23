@@ -26,7 +26,7 @@ services:
     # please note that last definitions always *replace* previous ones
     Symfony\Component\Mime\BodyRendererInterface: '@twig.mime_body_renderer'
 
-    App\Security\Listener\CheckConfirmedListener:
+    App\Security\Listeners\CheckConfirmedListener:
         tags:
             - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\CheckPassportEvent, method: checkPassport, priority: -10 }
             

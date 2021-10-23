@@ -104,6 +104,11 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        if (!$this->isGranted('author_edit', $trick)) {
+            $this->addFlash('alert', "Vous n'êtes pas l'auteur de cette figure.");
+            return $this->redirectToRoute('trick_index');
+        }
+
         $form = $this->createForm(TrickEditType::class, $trick);
 
         //Réindexation du tableau 'images' de la requête avant la validation des données
@@ -256,7 +261,11 @@ class TrickController extends AbstractController
     #[Route('/{id}/delete', name: 'trick_delete', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function delete(Request $request, Trick $trick): Response
     {
-        $this->denyAccessUnlessGranted('author_delete', $trick, "Vous n'avez pas le droit de supprimer cette figure.");
+        if (!$this->isGranted('author_delete', $trick)) {
+            $this->addFlash('alert', "Vous n'êtes pas l'auteur de cette figure.");
+            return $this->redirectToRoute('trick_index');
+        }
+
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
             $trick->setAuthor(null);
             $trick->setDescription(null);

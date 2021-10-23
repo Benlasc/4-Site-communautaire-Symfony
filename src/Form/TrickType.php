@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\Groupe;
 use App\Entity\Trick;
-use App\Form\Type\CkeditorType;
+use App\Form\CkeditorType;
 use App\Repository\TrickRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
